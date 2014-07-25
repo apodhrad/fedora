@@ -1,0 +1,23 @@
+# Ensure that you have installed 'bash-completion'
+
+_jbtis()
+{
+    JBTIS_HOME=/home/apodhrad/Projects/jbosstools-integration-stack-tests
+    local cur=${COMP_WORDS[COMP_CWORD]}
+    prev=${COMP_WORDS[COMP_CWORD-1]}
+    if [ "$prev" == "jbtis" ]; then
+       COMPREPLY=( $(compgen -W "build verify" -- $cur) )
+       return 0
+    fi
+    if [ "$prev" == "verify" ]; then
+       COMPREPLY=( $(compgen -W "esb bpel bpmn2 jbpm fuse drools modeshape switchyard teiid" -- $cur) )
+       return 0
+    fi
+    if [ $COMP_CWORD == 3 ]; then
+       TESTS=$( { for X in $(find $JBTIS_HOME/tests/org.jboss.tools.$prev.ui.bot.test -name '*Test.java'); do basename $X .java; done } | tr '\n' ' ' )
+       COMPREPLY=( $(compgen -W "$TESTS" -- $cur) )
+       return 0
+    fi
+    return 0
+}
+complete -F _jbtis jbtis

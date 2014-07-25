@@ -1,0 +1,17 @@
+#!/bin/sh
+
+JBTIS_HOME=/home/apodhrad/Projects/jbosstools-integration-stack-tests
+JVM_OPTS=" -Dtycho.localArtifacts=ignore "
+
+if [ "$1" == "build" ]; then
+     mvn -f $JBTIS_HOME/pom.xml clean package \
+	 -Dtycho.localArtifacts=ignore \
+	 -DskipTests
+fi
+if [ "$1" == "verify" ]; then
+     if [ -n "$3" ]; then
+	 JVM_OPTS+=" -Dtest=$3 "
+     fi
+     DISPLAY=:2 mvn -f $JBTIS_HOME/pom.xml clean verify \
+	 -pl tests/org.jboss.tools.$2.ui.bot.test -am $JVM_OPTS
+fi
