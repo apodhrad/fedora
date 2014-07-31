@@ -12,7 +12,7 @@ if [ "x$1" == "x" ]; then
     echo "    jbtis verify <project> <test>"
 fi
 if [ "$1" == "build" ]; then
-     mvn -f $JBTIS_HOME/pom.xml clean package \
+     mvn -f $JBTIS_HOME/pom.xml clean package -fn \
 	 -Dtycho.localArtifacts=ignore \
 	 -DskipTests
 fi

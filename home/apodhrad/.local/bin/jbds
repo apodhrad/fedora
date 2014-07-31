@@ -1,0 +1,31 @@
+#!/bin/sh
+
+JBDS_HOME=/home/apodhrad/Projects/jbds-installer
+
+if [ "$1" == "run" ]; then
+    if [[ $2 == jbds* ]]; then
+	$JBDS_HOME/$2/target/jbdevstudio/jbdevstudio -data $JBDS_HOME/$2/target/tmp &
+	exit 0
+    fi
+    if [[ $2 == eclipse* ]]; then
+	$JBDS_HOME/$2/target/eclipse/eclipse -data $JBDS_HOME/$2/target/tmp &
+	exit 0
+    fi
+    if [[ $2 == jbt* ]]; then
+	$JBDS_HOME/$2/target/eclipse/eclipse -data $JBDS_HOME/$2/target/tmp &
+	exit 0
+    fi
+    if [[ $2 == switchyard* ]]; then
+	$JBDS_HOME/$2/target/eclipse/eclipse -data $JBDS_HOME/$2/target/tmp &
+	exit 0
+    fi
+fi
+if [ "$1" == "install" ]; then
+     mvn -f $JBDS_HOME/pom.xml clean verify -pl $2
+     exit 0
+fi
+
+echo "Usage:"
+echo "    jbds"
+echo "    jbds run <product>"
+echo "    jbds install <product>"
