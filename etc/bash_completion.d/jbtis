@@ -10,7 +10,8 @@ _jbtis()
        return 0
     fi
     if [ "$prev" == "verify" ]; then
-       COMPREPLY=( $(compgen -W "esb bpel bpmn2 jbpm fuse drools modeshape switchyard teiid" -- $cur) )
+       PROJECTS=$( ls $JBTIS_HOME/tests | grep org.jboss.tools | tr '\n' ' ' | sed 's/org.jboss.tools.//g' | sed 's/.ui.bot.test//g' )
+       COMPREPLY=( $(compgen -W "$PROJECTS" -- $cur) )
        return 0
     fi
     if [ $COMP_CWORD == 3 ]; then
