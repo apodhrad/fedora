@@ -23,6 +23,12 @@ if [ "$1" == "verify" ]; then
      if [ -n "$3" ]; then
 	 JVM_OPTS+=" -Dtest=$3 "
      fi
+     if [ "$3" == "x" ] || [ "$4" == "x" ]; then
+	 MVN_OPTS+=" -X "
+     fi
+     if [ "$4" == "d" ]; then
+	 JVM_OPTS+=" -DdebugPort=8001 "
+     fi
      
      DISPLAY=:2 mvn -f $JBTIS_HOME/pom.xml clean verify $MVN_OPTS $JVM_OPTS
 fi
