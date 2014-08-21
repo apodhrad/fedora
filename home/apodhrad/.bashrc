@@ -19,6 +19,7 @@ alias gojbpm='cd /home/apodhrad/Projects/jbosstools-integration-stack-tests/test
 alias gomodeshape='cd /home/apodhrad/Projects/jbosstools-integration-stack-tests/tests/org.jboss.tools.modeshape.ui.bot.test'
 alias goswitchyard='cd /home/apodhrad/Projects/jbosstools-integration-stack-tests/tests/org.jboss.tools.switchyard.ui.bot.test'
 alias goteiid='cd /home/apodhrad/Projects/jbosstools-integration-stack-tests/tests/org.jboss.tools.teiid.ui.bot.test'
+alias goruntime='cd /home/apodhrad/Projects/jbosstools-integration-stack-tests/tests/org.jboss.tools.runtime.ui.bot.test'
 alias golocal='cd /home/apodhrad/Projects/fedora/home/apodhrad/.local/bin'
 
 # Java
