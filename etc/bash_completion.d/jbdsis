@@ -1,11 +1,11 @@
 # Ensure that you have installed 'bash-completion'
 
-_jbtis()
+_jbdsis()
 {
     JBTIS_HOME=/home/apodhrad/Projects/jbosstools-integration-stack-tests
     local cur=${COMP_WORDS[COMP_CWORD]}
     prev=${COMP_WORDS[COMP_CWORD-1]}
-    if [ "$prev" == "jbtis" ]; then
+    if [ "$prev" == "jbdsis" -o "$prev" == "jbdsisnew" ]; then
        COMPREPLY=( $(compgen -W "build verify" -- $cur) )
        return 0
     fi
@@ -21,4 +21,5 @@ _jbtis()
     fi
     return 0
 }
-complete -F _jbtis jbtis
+complete -F _jbdsis jbdsis
+complete -F _jbdsis jbdsisnew
