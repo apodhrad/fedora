@@ -2,6 +2,7 @@
 
 JBDS_HOME=/home/apodhrad/Projects/jbds-installer
 JBDS_OPTS="-data $JBDS_HOME/$2/target/tmp -clean"
+PROFILE=""
 
 if [ "$1" == "run" ]; then
     if [[ $2 == jbds* ]]; then
@@ -22,11 +23,15 @@ if [ "$1" == "run" ]; then
     fi
 fi
 if [ "$1" == "install" ]; then
-     mvn -f $JBDS_HOME/pom.xml clean verify -pl $2
-     exit 0
+    if [ -n "$3" ]; then
+	PROFILE="-P$3"
+    fi
+    mvn -f $JBDS_HOME/pom.xml clean verify -pl $2 $PROFILE
+    exit 0
 fi
 
 echo "Usage:"
 echo "    jbds"
 echo "    jbds run <product>"
 echo "    jbds install <product>"
+echo "    jbds install <product> <profile>"

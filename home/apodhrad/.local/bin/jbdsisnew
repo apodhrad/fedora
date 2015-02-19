@@ -1,0 +1,42 @@
+#!/bin/sh
+TEMP=/home/apodhrad/Temp
+JBDS_INSTALLER_REPO=git@github.com:apodhrad/jbds-installer.git
+JBDS_INSTALLER_DIR=$TEMP/jbds-installer
+JBDS=jbds-8.0.2.GA_jbdsis-8.0.0.CR3
+JBDS_HOME=$JBDS_INSTALLER_DIR/$JBDS/target/jbdevstudio/studio
+JBTIS_HOME=/home/apodhrad/Projects/jbosstools-integration-stack-tests
+JVM_OPTS=" -Dtycho.localArtifacts=ignore -Dtest=SmokeTests"
+MVN_OPTS=""
+
+if [ "x$1" == "x" ]; then
+    echo "Usage:"
+    echo "    jbtis build"
+    echo "    jbtis verify"
+    echo "    jbtis verify <project>"
+    echo "    jbtis verify <project> <test>"
+fi
+if [ "$1" == "build" ]; then
+     mvn -f $JBTIS_HOME/pom.xml clean package -fn \
+	 -Dtycho.localArtifacts=ignore \
+	 -DskipTests
+fi
+if [ "$1" == "verify" ]; then
+     if [ -n "$2" ]; then
+	 MVN_OPTS+=" -pl tests/org.jboss.tools.$2.ui.bot.test -am "
+     fi
+     if [ -n "$3" ]; then
+	 JVM_OPTS+=" -Dtest=$3 "
+     fi
+     if [ "$3" == "x" ] || [ "$4" == "x" ]; then
+	 MVN_OPTS+=" -X "
+     fi
+     if [ "$4" == "d" ]; then
+	 JVM_OPTS+=" -DdebugPort=8001 "
+     fi
+     JVM_OPTS+=" -Dtest.installPath=${JBDS_HOME} "
+
+     rm -rf $JBDS_INSTALLER_DIR
+     cd $TEMP; git clone $JBDS_INSTALLER_REPO
+     mvn -f $JBDS_INSTALLER_DIR/pom.xml clean package -pl $JBDS
+     DISPLAY=:2 mvn -f $JBTIS_HOME/pom.xml clean verify $MVN_OPTS $JVM_OPTS
+fi
